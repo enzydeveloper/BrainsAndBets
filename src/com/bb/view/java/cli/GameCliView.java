@@ -26,17 +26,12 @@ import com.bb.view.AbstractGameView;
 public class GameCliView extends AbstractGameView implements Observer, Runnable{
 	public static void main(String[] args) {
 		GameCliView game = new GameCliView();
-		Thread gameGuiThread = new Thread(game);
-		gameGuiThread.setName(game.getClass().getName());
-		gameGuiThread.start();
+		Thread gameViewThread = new Thread(game);
+		gameViewThread.setName(game.getClass().getName());
+		gameViewThread.start();
 	}
 	
 	
-	/*
-	 * Holds the thread that runs the game so it's not on the same thread as
-	 * theGUI
-	 */
-	private Thread gameModelThread;
 	private boolean isHosting = true;
 
 	/**
@@ -49,6 +44,13 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 	@Override
 	public void run() {
 		this.promptForGameInfo();
+//		try {
+//			log.debug("Waiting...");
+//			this.wait();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	private void initializeTestVariables() {
@@ -132,19 +134,14 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			
 			
 			// Start up the game in a separate thread than the GUI
-			if(gameModel instanceof GameModelHost){
-//				GameModelHost gameModelHost = (GameModelHost)gameModel;
-//				gameModelHost.addObserver(this);
-//				gameThread = new Thread(gameModelHost);
-//				gameThread.start();
-				
+			if(gameModel instanceof GameModelHost){				
 				GameModelHost gameModelHost = (GameModelHost)gameModel;
 				// Tell the model that this GUI is observing changes in the model
 				gameModelHost.addObserver(this);
 				
 				//Launch the gameModel in a separate thread than the GUI
 				gameModelThread = new Thread(gameModelHost);
-				gameModelThread.setName("GameLogicThread");
+				gameModelThread.setName("GameModelThread");
 				gameModelThread.start();
 			}
 	
@@ -164,7 +161,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			// Tell the model that this GUI is observing changes in the model
 			gameModel.addObserver(this);
 			
-			// As a client, we don't need to run the game, just need to listen to Server
+			// TODO: As a client, we don't need to run the game, just need to listen to Server
 			
 			//Specify what kind of implementation of network we want to use to play the game on.
 			networkGameGatewayInterface = new NetworkGameGatewayImplLocal();
@@ -181,41 +178,21 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 	@Override
 	protected void handleStateGuess() {
 		log.debug("handleStateGuess()");
-		String guessInput;
 		
-//		ExecutorService executor = Executors.newSingleThreadExecutor();
-//	    Callable<String> callable = new Callable<String>() {
-//	        @Override
-//	        public String call() {
-//	    		System.out.println("::::::::::::::::::Place your Guess now::::::::::::::::::");
-//	    		Scanner keyboard = new Scanner(System.in);
-//	    		String guessInput = keyboard.next();
-//	    		if (guessInput.isEmpty()) {
-//	    			System.out.print("Enter in a valid guess");
-//	    		} else {
-//	    			return guessInput;
-//	    		}
-//	        }
-//	    };
-//	    Future<String> future = executor.submit(callable);
-//	    // future.get() returns 2
-//	    executor.shutdown();
-//	    
-//	    try {
-//			guessInput = future.get();
-//		} catch (InterruptedException | ExecutionException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//		String guessInput;
 		
 		System.out.println("::::::::::::::::::Place your Guess now::::::::::::::::::");
 		Scanner keyboard = new Scanner(System.in);
+		String guessInput = "";
 		guessInput = keyboard.next();
-		if (guessInput.isEmpty()) {
+		
+		do{
 			System.out.print("Enter in a valid guess");
-		} else {
-			
-		}
+		} while (guessInput.isEmpty());
+		
+		System.out.print("You guessed: " +guessInput);
+		keyboard.close();
+		
 	}
 	@Override
 	protected void handleStateBet() {

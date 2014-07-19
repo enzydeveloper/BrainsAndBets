@@ -6,6 +6,8 @@ package com.bb.game.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ public class GameModelHost extends GameModel implements Runnable{
 	public GameModelHost(ArrayList<AbstractPlayer> playerList,
 			GameQuestions gameQuestions, int numberOfRounds) {
 		super(playerList, gameQuestions, numberOfRounds);
+//		LogManager.getLogger(GameModelHost.class).setLevel(Level.WARN );
 	}
 
 	@Override
@@ -146,7 +149,7 @@ public class GameModelHost extends GameModel implements Runnable{
 	@Override
 	public void displayEndRoundState() {
 		log.debug("displayEndRoundState:");
-		this.gameState = GameState.STATE_ROUND_END;
+		this.gameState = GameState.STATE_ROUND_FINISHED;
 		this.setChanged();
 		this.notifyObservers(gameState);
 	}

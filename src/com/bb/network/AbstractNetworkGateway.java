@@ -3,10 +3,6 @@ package com.bb.network;
 
 import java.util.Observable;
 
-import org.jwebsocket.api.WebSocketClientEvent;
-import org.jwebsocket.api.WebSocketClientTokenListener;
-import org.jwebsocket.api.WebSocketPacket;
-import org.jwebsocket.token.Token;
 
 import com.bb.game.gameObjects.GameState;
 

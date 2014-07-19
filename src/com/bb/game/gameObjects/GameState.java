@@ -11,13 +11,18 @@ package com.bb.game.gameObjects;
  * 
  * @author Enzo
  * 
+ * TODO: do we need an "end state"?
  */
 public enum GameState {
 	STATE_GAME_UNINITIALIZED, 
-	STATE_QUESTION, 
+	STATE_QUESTION,
+//	STATE_QUESTION_END,
 	STATE_GUESS, 
+//	STATE_GUESS_END,
 	STATE_BET, 
+//	STATE_BET_END,
 	STATE_ANSWER, 
-	STATE_ROUND_END,
+//	STATE_ANSWER_END,
+	STATE_ROUND_FINISHED,
 	STATE_GAME_FINISHED;
 }

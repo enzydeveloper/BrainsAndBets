@@ -3,6 +3,11 @@ package com.bb.view;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +39,16 @@ public abstract class AbstractGameView implements Observer {
 	// Define what observable/observe variables
 	protected GameState gameState;
 	protected GameModel gameModel;
+	
+	//Thread pool for view
+	protected ExecutorService executorService = Executors.newCachedThreadPool();
+	protected Thread gameViewThread;
+	
+	/*
+	 * Holds the thread that runs the game so it's not on the same thread as
+	 * theGUI
+	 */
+	protected Thread gameModelThread;
 
 	/*
 	 * (non-Javadoc)
@@ -45,11 +60,15 @@ public abstract class AbstractGameView implements Observer {
 	 */
 	@Override
 	public void update(Observable observable, final Object data) {
+		if(gameViewThread != null && gameViewThread.isAlive()){
+			gameViewThread.interrupt();
+		}
+		
 		
 		if (observable == gameModel) {
 			log.debug("update(), data=" + data);
-
-			Runnable updateRunnable = new Runnable(){
+			
+			Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
 					if (data instanceof GameState) {
@@ -60,16 +79,9 @@ public abstract class AbstractGameView implements Observer {
 					}
 				}
 			};
-			Thread updateThread = new Thread(updateRunnable);
-			updateThread.setName("UpdateThread");
-			updateThread.start();
-			
-//			if (data instanceof GameState) {
-//				GameState currentGameState = (GameState) data;
-//				handleGameStateChange(currentGameState);
-//			} else {
-//				log.warn("update(), unknown data update " + data);
-//			}
+			gameViewThread = new Thread(runnable);
+			gameViewThread.setName(this.getClass().getName());
+			gameViewThread.start();
 		}
 		//TODO: do we need to also observe when the server sends messages to the client?
 	}
@@ -90,7 +102,7 @@ public abstract class AbstractGameView implements Observer {
 		case STATE_ANSWER:
 			handleStateAnswer();
 			break;
-		case STATE_ROUND_END:
+		case STATE_ROUND_FINISHED:
 			handleStateRoundEnd();
 			break;
 		case STATE_GAME_FINISHED:

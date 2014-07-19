@@ -12,8 +12,14 @@ import java.util.TimerTask;
 
 
 
+
+
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 
 
 
@@ -34,6 +40,7 @@ public abstract class CountDownTimerJava extends CountDownTimer{
 	
 	public CountDownTimerJava(long millisInFuture, long countDownInterval) {
 		super(millisInFuture, countDownInterval);
+		LogManager.getLogger(CountDownTimerJava.class).setLevel(Level.WARN );
 	}
 
 	/* (non-Javadoc)
@@ -80,7 +87,7 @@ public abstract class CountDownTimerJava extends CountDownTimer{
             final long millisLeft = mMillisInFuture;
             
             if(millisLeft >= 0){
-                log.debug("run()" +millisLeft);
+                log.debug("run(): millisLeft={}" ,millisLeft);
     			onTick(millisLeft);
             }else{
             	finishTimer();

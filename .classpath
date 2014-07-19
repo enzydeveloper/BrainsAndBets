@@ -15,10 +15,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/My Documents/Enzo&apos;s Documents and Such/Coding/jWebSocketFullSources-1.0-b30518/jWebSocketDev/rte/jWebSocket-1.0/libs/kahadb-5.5.0.jar"/>
-	<classpathentry kind="lib" path="D:/My Documents/Enzo&apos;s Documents and Such/Coding/jWebSocketFullSources-1.0-b30518/jWebSocketDev/rte/jWebSocket-1.0/libs/mysql-connector-java-5.1.16.jar"/>
-	<classpathentry kind="lib" path="D:/My Documents/Enzo&apos;s Documents and Such/Coding/jWebSocketFullSources-1.0-b30518/jWebSocketDev/rte/jWebSocket-1.0/libs/sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry kind="lib" path="D:/My Documents/Enzo&apos;s Documents and Such/Coding/jWebSocketFullSources-1.0-b30518/jWebSocketDev/rte/jWebSocket-1.0/libs/jWebSocketJavaSEClient-1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

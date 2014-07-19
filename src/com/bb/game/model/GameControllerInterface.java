@@ -1,7 +1,7 @@
 package com.bb.game.model;
 
 /**
- * Define what methods will be used to modify the GameModel
+ * Define what methods that affects the game model. 
  * @author Enzo
  *
  */
