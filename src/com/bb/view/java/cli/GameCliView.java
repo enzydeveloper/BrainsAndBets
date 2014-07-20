@@ -131,7 +131,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			log.debug("We are hosting the server");
 			
 			// Define the game object that will run the game
-			gameModel = new GameModelHost(gamePlayers, gameQuestions,
+			gameModel = new GameModelHost(this.gamePlayers, gameQuestions,
 					numOfQuestions);
 			
 			
@@ -154,7 +154,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			log.debug("We are being a client to the server");
 			
 			// Define the game object that will run the game
-			gameModel = new GameModelClient(gamePlayers, gameQuestions,
+			gameModel = new GameModelClient(this.gamePlayers, gameQuestions,
 					numOfQuestions);
 			// Tell the model that this GUI is observing changes in the model
 			gameModel.addObserver(this);
