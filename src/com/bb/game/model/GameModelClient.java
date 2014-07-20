@@ -1,6 +1,8 @@
 package com.bb.game.model;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.UUID;
 
 import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.GameQuestions;
@@ -14,9 +16,10 @@ import com.bb.game.gameObjects.GameQuestions;
  */
 public class GameModelClient extends GameModel{
 
-	public GameModelClient(ArrayList<AbstractPlayer> playerList,
+	public GameModelClient(Map<UUID, AbstractPlayer> gamePlayers,
 			GameQuestions gameQuestions, int numberOfRounds) {
-		super(playerList, gameQuestions, numberOfRounds);
+		super(gamePlayers, gameQuestions, numberOfRounds);
+		// TODO Auto-generated constructor stub
 	}
 
 	/**

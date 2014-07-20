@@ -80,7 +80,8 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			System.out
 					.print("Your name was not valid, defaulting your player name");
 		} else {
-			this.playerService.addPlayerToGame(absPlayer, gamePlayersMapping);
+			HumanPlayer player = new HumanPlayer(playerNameInput);
+			this.playerService.addPlayerToGame(player, this.gamePlayers);
 		}
 
 		/* ******************************************
@@ -130,7 +131,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			log.debug("We are hosting the server");
 			
 			// Define the game object that will run the game
-			gameModel = new GameModelHost(playerList, gameQuestions,
+			gameModel = new GameModelHost(gamePlayers, gameQuestions,
 					numOfQuestions);
 			
 			
@@ -139,11 +140,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 				GameModelHost gameModelHost = (GameModelHost)gameModel;
 				// Tell the model that this GUI is observing changes in the model
 				gameModelHost.addObserver(this);
-				
-				//Launch the gameModel in a separate thread than the GUI
-				gameModelThread = new Thread(gameModelHost);
-				gameModelThread.setName("GameModelThread");
-				gameModelThread.start();
+				gameModelHost.startGame();
 			}
 	
 			// TODO: instead of starting game right away, we want to launch a game
@@ -157,7 +154,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			log.debug("We are being a client to the server");
 			
 			// Define the game object that will run the game
-			gameModel = new GameModelClient(playerList, gameQuestions,
+			gameModel = new GameModelClient(gamePlayers, gameQuestions,
 					numOfQuestions);
 			// Tell the model that this GUI is observing changes in the model
 			gameModel.addObserver(this);

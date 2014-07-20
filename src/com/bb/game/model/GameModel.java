@@ -41,6 +41,8 @@ public abstract class GameModel extends Observable implements GameModelControlle
 	//Communication between the model and observers
 	GameState gameState;
 	
+	Thread gameModelThread;
+	
 	public GameModel(Map<UUID, AbstractPlayer> gamePlayers,
 			GameQuestions gameQuestions, int numberOfRounds) {
 
