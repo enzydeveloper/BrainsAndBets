@@ -1,9 +1,11 @@
 package com.bb.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.GameState;
+import com.bb.game.gameObjects.services.PlayerService;
+import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModel;
 import com.bb.game.model.GameModelHost;
 import com.bb.network.AbstractNetworkGateway;
@@ -31,7 +35,7 @@ public abstract class AbstractGameView implements Observer {
 	protected Logger log = LoggerFactory.getLogger(AbstractGameView.class);
 
 	protected ArrayList<String> availableCategories = new ArrayList<String>();
-	protected ArrayList<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>();
+	protected HashMap<UUID, AbstractPlayer> playerList = new HashMap<UUID, AbstractPlayer>();
 
 	//How the game model will be affected by Server, if there are any
 	protected NetworkGameGatewayInterface networkGameGatewayInterface;
@@ -43,6 +47,11 @@ public abstract class AbstractGameView implements Observer {
 	//Thread pool for view
 	protected ExecutorService executorService = Executors.newCachedThreadPool();
 	protected Thread gameViewThread;
+	
+	
+	//Services for use View use
+	protected PlayerService playerService = new PlayerServiceImpl();
+	
 	
 	/*
 	 * Holds the thread that runs the game so it's not on the same thread as

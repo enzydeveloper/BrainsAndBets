@@ -4,7 +4,9 @@
 package com.bb.game.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
+import java.util.UUID;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -29,13 +31,14 @@ public class GameModelHost extends GameModel implements Runnable{
 	Logger log = LoggerFactory.getLogger(GameModelHost.class);
 
 	/**
-	 * @param playerList
+	 * 
+	 * @param gamePlayers
 	 * @param gameQuestions
+	 * @param numberOfRounds
 	 */
-	public GameModelHost(ArrayList<AbstractPlayer> playerList,
+	public GameModelHost(Map<UUID, AbstractPlayer> gamePlayers,
 			GameQuestions gameQuestions, int numberOfRounds) {
-		super(playerList, gameQuestions, numberOfRounds);
-//		LogManager.getLogger(GameModelHost.class).setLevel(Level.WARN );
+		super(gamePlayers, gameQuestions, numberOfRounds);
 	}
 
 	@Override

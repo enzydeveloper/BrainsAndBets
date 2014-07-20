@@ -5,6 +5,7 @@ package com.bb.view.java.cli;
 
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ import java.util.concurrent.Future;
 
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.HumanPlayer;
+import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModelClient;
 import com.bb.game.model.GameModelHost;
 import com.bb.network.NetworkGameGatewayImplJwebsocket;
@@ -78,8 +80,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			System.out
 					.print("Your name was not valid, defaulting your player name");
 		} else {
-			HumanPlayer p1 = new HumanPlayer(playerNameInput);
-			playerList.add(p1);
+			this.playerService.addPlayerToGame(absPlayer, gamePlayersMapping);
 		}
 
 		/* ******************************************

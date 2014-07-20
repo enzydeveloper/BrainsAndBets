@@ -4,7 +4,9 @@
 package com.bb.game.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +23,14 @@ import com.bb.game.gameObjects.GameState;
  * @author Enzo
  * 
  */
-public abstract class GameModel extends Observable implements GameControllerInterface{
+public abstract class GameModel extends Observable implements GameModelControllerInterface{
 	Logger log = LoggerFactory.getLogger(GameModel.class);
 
 	//Timer variables
 	CountDownTimer gameTimer;
 	
-	// List of players
-	ArrayList<AbstractPlayer> playerList;
+	// Players in the game
+	Map<UUID, AbstractPlayer> gamePlayers;
 
 	// Game variables
 	GameQuestions gameQuestions;
@@ -39,11 +41,11 @@ public abstract class GameModel extends Observable implements GameControllerInte
 	//Communication between the model and observers
 	GameState gameState;
 	
-	public GameModel(ArrayList<AbstractPlayer> playerList,
+	public GameModel(Map<UUID, AbstractPlayer> gamePlayers,
 			GameQuestions gameQuestions, int numberOfRounds) {
 
 		this.gameState = GameState.STATE_GAME_UNINITIALIZED;
-		this.playerList = playerList;
+		this.gamePlayers = gamePlayers;
 		this.gameQuestions = gameQuestions;
 		this.numberOfRounds = numberOfRounds;
 	}
@@ -51,8 +53,8 @@ public abstract class GameModel extends Observable implements GameControllerInte
 	/**
 	 * @return the playerList
 	 */
-	public ArrayList<AbstractPlayer> getPlayerList() {
-		return playerList;
+	public Map<UUID, AbstractPlayer> getGamePlayers() {
+		return gamePlayers;
 	}
 	/**
 	 * @return the gameQuestions
@@ -84,6 +86,18 @@ public abstract class GameModel extends Observable implements GameControllerInte
 	public GameState getGameState() {
 		return gameState;
 	}
+	
+
+	abstract void setNextQuestion();
+	abstract void displayQuestionState();
+	abstract void waitOnQuestionState();
+	abstract void displayGuessState();
+	abstract void waitOnGuessState();
+	abstract void displayAnswerState();
+	abstract void waitOnAnswerState();
+	abstract void displayEndRoundState();
+	abstract void waitOnEndRoundState();
+	abstract void displayEndGameState();
 
 	
 	

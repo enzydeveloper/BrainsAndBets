@@ -82,4 +82,42 @@ public class GameModelClient extends GameModel{
 		
 	}
 
+	
+	
+	
+	@Override
+	public void startGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stopGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void kickPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void voteQuestionUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void voteQuestionDown() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+
 }
