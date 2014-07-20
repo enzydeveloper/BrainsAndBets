@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bb.game.gameObjects;
+package com.bb.game.gameObjects.Player;
 
 /**
  * Interface to provide different implementations of what players can do in a game

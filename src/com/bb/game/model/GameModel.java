@@ -11,10 +11,10 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.AbstractQuestion;
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.GameState;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 
 /**
  * Abstract class to provide the groundwork for the Game model information that

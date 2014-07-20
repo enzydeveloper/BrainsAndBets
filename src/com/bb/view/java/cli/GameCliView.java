@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.bb.game.gameObjects.GameQuestions;
-import com.bb.game.gameObjects.HumanPlayer;
+import com.bb.game.gameObjects.Player.HumanPlayer;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModelClient;
 import com.bb.game.model.GameModelHost;

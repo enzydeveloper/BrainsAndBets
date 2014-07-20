@@ -13,10 +13,10 @@ import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.GameState;
 import com.bb.game.gameObjects.GameStateWaitTime;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.view.java.gui.CountDownTimerJava;
 
 /**

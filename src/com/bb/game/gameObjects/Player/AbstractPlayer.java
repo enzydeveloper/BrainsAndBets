@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bb.game.gameObjects;
+package com.bb.game.gameObjects.Player;
 
 import java.util.UUID;
 

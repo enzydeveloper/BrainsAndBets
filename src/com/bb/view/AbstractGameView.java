@@ -14,8 +14,8 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.GameState;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.game.gameObjects.services.PlayerService;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModel;
@@ -47,7 +47,6 @@ public abstract class AbstractGameView implements Observer {
 	//Thread pool for view
 	protected ExecutorService executorService = Executors.newCachedThreadPool();
 	protected Thread gameViewThread;
-	
 	
 	//Services for use View use
 	protected PlayerService playerService = new PlayerServiceImpl();

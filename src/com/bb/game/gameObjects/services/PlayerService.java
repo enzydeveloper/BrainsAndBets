@@ -6,7 +6,7 @@ package com.bb.game.gameObjects.services;
 import java.util.Map;
 import java.util.UUID;
 
-import com.bb.game.gameObjects.AbstractPlayer;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 
 /**
  * @author Enzo

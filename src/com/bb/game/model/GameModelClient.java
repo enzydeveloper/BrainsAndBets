@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
-import com.bb.game.gameObjects.AbstractPlayer;
 import com.bb.game.gameObjects.GameQuestions;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 
 /**
  * The client game model will only serve as place holder for game changes that
