@@ -33,9 +33,7 @@ import com.bb.network.NetworkGameGatewayInterface;
  */
 public abstract class AbstractGameView implements Observer {
 	protected Logger log = LoggerFactory.getLogger(AbstractGameView.class);
-
-	protected ArrayList<String> availableCategories = new ArrayList<String>();
-	protected HashMap<UUID, AbstractPlayer> gamePlayers = new HashMap<UUID, AbstractPlayer>();
+	
 
 	//How the game model will be affected by Server, if there are any
 	protected NetworkGameGatewayInterface networkGameGatewayInterface;
