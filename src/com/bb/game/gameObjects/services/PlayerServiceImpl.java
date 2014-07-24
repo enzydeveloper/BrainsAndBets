@@ -3,6 +3,7 @@ package com.bb.game.gameObjects.services;
 import java.util.Map;
 import java.util.UUID;
 
+import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
 
 public class PlayerServiceImpl implements PlayerService {
@@ -25,6 +26,17 @@ public class PlayerServiceImpl implements PlayerService {
 		return gamePlayersToReturn;
 		
 	}
+
+	@Override
+	public AbstractPlayer updatePlayerGuess(AbstractPlayer player, String guessString) {
+		return updatePlayerGuess(player, new Guess(guessString));
+	}
 	
+	@Override
+	public AbstractPlayer updatePlayerGuess(final AbstractPlayer player, final Guess guess) {
+		AbstractPlayer thisPlayer = player;
+		thisPlayer.setGuess(guess);
+		return thisPlayer;
+	}
 	
 }
