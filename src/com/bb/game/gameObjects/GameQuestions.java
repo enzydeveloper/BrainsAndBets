@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import com.bb.game.gameObjects.Question.AbstractQuestion;
+import com.bb.game.gameObjects.Question.NumericQuestion;
+
 
 /**
  * This object will be converted to and from XML

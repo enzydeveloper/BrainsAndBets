@@ -2,9 +2,9 @@ package com.bb.network;
 
 import java.util.List;
 
-import com.bb.game.gameObjects.AbstractQuestion;
 import com.bb.game.gameObjects.Bet;
 import com.bb.game.gameObjects.Guess;
+import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 
 /**

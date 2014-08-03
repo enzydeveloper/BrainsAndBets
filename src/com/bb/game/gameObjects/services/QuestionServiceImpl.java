@@ -11,9 +11,9 @@ import javax.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bb.game.gameObjects.AbstractQuestion;
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.GameQuestionsUtil;
+import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 /**
  * 

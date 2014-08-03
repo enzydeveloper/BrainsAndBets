@@ -2,8 +2,8 @@ package com.bb.game.gameObjects.services;
 
 import java.util.ArrayList;
 
-import com.bb.game.gameObjects.AbstractQuestion;
 import com.bb.game.gameObjects.GameQuestions;
+import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 /**
  * @author Enzo
