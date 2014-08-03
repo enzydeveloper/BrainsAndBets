@@ -47,20 +47,35 @@ public abstract class AbstractPlayer implements PlayerActions {
 	public Guess getGuess() {
 		return guess;
 	}
+	
 	/**
 	 * @param guess the guess to set
 	 */
 	public void setGuess(Guess guess) {
 		this.guess = guess;
 	}
-	
-	public void updatePlayerWinnings(){
-		volatileGameChips = volatileGameChips + 1;
-		playerScore = volatileGameChips + permanentGameChips;
+	/**
+	 * @return the permanentGameChips
+	 */
+	public int getPermanentGameChips() {
+		return permanentGameChips;
 	}
-	public void updatePlayerLosings(){
-		volatileGameChips = volatileGameChips - 1;
-		playerScore = volatileGameChips + permanentGameChips;
+	/**
+	 * @param permanentGameChips the permanentGameChips to set
+	 */
+	public void setPermanentGameChips(int permanentGameChips) {
+		this.permanentGameChips = permanentGameChips;
 	}
-	
+	/**
+	 * @return the volatileGameChips
+	 */
+	public int getVolatileGameChips() {
+		return volatileGameChips;
+	}
+	/**
+	 * @param volatileGameChips the volatileGameChips to set
+	 */
+	public void setVolatileGameChips(int volatileGameChips) {
+		this.volatileGameChips = volatileGameChips;
+	}
 }
