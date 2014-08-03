@@ -1,4 +1,4 @@
-package com.bb.game.gameObjects;
+package com.bb.game.gameObjects.Question;
 
 import javax.xml.bind.annotation.XmlTransient;
 
