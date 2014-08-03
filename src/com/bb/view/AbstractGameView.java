@@ -49,13 +49,6 @@ public abstract class AbstractGameView implements Observer {
 	//Services for use View use
 	protected PlayerService playerService = new PlayerServiceImpl();
 	
-	
-	/*
-	 * Holds the thread that runs the game so it's not on the same thread as
-	 * theGUI
-	 */
-	protected Thread gameModelThread;
-
 	/*
 	 * (non-Javadoc)
 	 * 
