@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
+import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 /**
  * @author Enzo
@@ -46,4 +47,12 @@ public interface PlayerService {
 	 * @return
 	 */
 	public AbstractPlayer updatePlayerGuess(AbstractPlayer player, String guessString);
+	
+	/**
+	 * Update player winning based on what the player guessed on and how many possible answers there were
+	 * @param numberOfPlayerGuesses
+	 * @param numberOfPossibleAnswers
+	 * @return
+	 */
+	public AbstractPlayer updatePlayerWinnings(final AbstractPlayer player, final AbstractQuestion question, final int playerBetAmount, final int numberOfPlayerGuesses, final int numberOfPossibleAnswers);
 }
