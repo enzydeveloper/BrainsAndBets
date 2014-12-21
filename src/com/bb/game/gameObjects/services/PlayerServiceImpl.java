@@ -1,11 +1,13 @@
 package com.bb.game.gameObjects.services;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
+import com.bb.game.gameObjects.Question.MultipleChoiceQuestion;
 import com.bb.game.gameObjects.Question.NumericQuestion;
 
 public class PlayerServiceImpl implements PlayerService {
@@ -44,16 +46,33 @@ public class PlayerServiceImpl implements PlayerService {
 	public AbstractPlayer updatePlayerWinnings(AbstractPlayer player,
 			AbstractQuestion question, int playerBetAmount,
 			int numberOfPlayerGuesses, int numberOfPossibleAnswers) {
-		
-				
+						
 		player.setVolatileGameChips(player.getVolatileGameChips() + 1);
-	
-		if(question instanceof NumericQuestion){
-			
-		}else{
-			
+		
+//		if(question instanceof NumericQuestion){
+//			
+//		}else if(question instanceof MultipleChoiceQuestion){
+//			MultipleChoiceQuestion multipleChoiceQuestion = (MultipleChoiceQuestion) question;
+//			
+//			Map<String, String> potentialAnswers = multipleChoiceQuestion.getPotentialAnswers();
+//			
+//			int incorrectAnswers = 0;
+//			int correctAnswers = 0;
+//			
+//			for(int i = 0; i < potentialAnswers.size(); i++ ){
+//				player.getGuess();
+//			}
+//		}
+		return player;
+	}
+
+	@Override
+	public AbstractPlayer updatePlayerWinnings(
+			Map<UUID, AbstractPlayer> gamePlayers, AbstractQuestion question) {
+		for(Entry<UUID, AbstractPlayer> entry : gamePlayers.entrySet()){
+			AbstractPlayer player = entry.getValue();
 		}
-	
+		
 		return null;
 	}
 	

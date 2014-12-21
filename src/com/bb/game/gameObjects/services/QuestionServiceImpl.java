@@ -16,6 +16,7 @@ import com.bb.game.gameObjects.GameQuestionsUtil;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 /**
+ * Handling of how questions are extracted and stored 
  * 
  * @author Enzo
  *

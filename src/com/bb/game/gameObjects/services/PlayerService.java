@@ -55,4 +55,15 @@ public interface PlayerService {
 	 * @return
 	 */
 	public AbstractPlayer updatePlayerWinnings(final AbstractPlayer player, final AbstractQuestion question, final int playerBetAmount, final int numberOfPlayerGuesses, final int numberOfPossibleAnswers);
+	
+	/**
+	 * 
+	 * @param gamePlayers
+	 * @param question
+	 * @param playerBetAmount
+	 * @param numberOfPlayerGuesses
+	 * @param numberOfPossibleAnswers
+	 * @return
+	 */
+	public AbstractPlayer updatePlayerWinnings(final Map<UUID, AbstractPlayer> gamePlayers, final AbstractQuestion question);
 }
