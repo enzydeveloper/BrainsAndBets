@@ -17,6 +17,12 @@ import com.bb.game.gameObjects.services.QuestionService;
 import com.bb.game.gameObjects.services.QuestionServiceImpl;
 import com.bb.game.model.GameModelHost;
 
+
+/**
+ * Provides a quick and dirty method of creating and storing questions with a command prompt/GUI
+ * @author Enzo
+ *
+ */
 public class GameQuestionsUtil {
 	private static final String questionsFileDirectory = "D:\\";
 	static Logger log = LoggerFactory.getLogger(GameQuestionsUtil.class);

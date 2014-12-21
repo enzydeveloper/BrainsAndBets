@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 import com.bb.game.gameObjects.Question.AbstractQuestion;
 import com.bb.game.gameObjects.Question.NumericQuestion;
+import com.bb.game.gameObjects.services.QuestionService;
+import com.bb.game.gameObjects.services.QuestionServiceImpl;
 
 
 /**
@@ -18,6 +20,8 @@ import com.bb.game.gameObjects.Question.NumericQuestion;
 @XmlRootElement(namespace = "gameObjects")
 @XmlSeeAlso(NumericQuestion.class)//this tells what kind of <AbstractQuestion> that is is gameQuestionsList to store
 public class GameQuestions {
+	
+	private QuestionService questionService = new QuestionServiceImpl();
 	
 	private ArrayList<AbstractQuestion> gameQuestionsList = new ArrayList<AbstractQuestion>();
 	private String questionCategory;
@@ -48,7 +52,7 @@ public class GameQuestions {
 	 */
 	public void populateGameQuestions(String questionCategory, int numOfQuestions) {
 		// Pull questions from the specified category
-		gameQuestionsList = GameQuestionsUtil.gatherQuestions(questionCategory,
+		gameQuestionsList = questionService.gatherQuestions(questionCategory,
 				numOfQuestions);
 		Collections.shuffle(gameQuestionsList);
 	}
