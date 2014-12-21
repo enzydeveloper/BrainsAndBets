@@ -39,4 +39,15 @@
 			<version>1.7.6</version>
 		</dependency>
 	</dependencies>
+	<name>Brains And Bets</name>
+	<description>&lt;h1&gt;A University of Parkside SE2 project.&lt;/h1&gt;
+
+This project aims to create a game similar to the real board game called &quot;Wits &amp; Wagers&quot;
+
+This version aims to be a complete overhaul of the previous project by implementing a dynamic and maintainable code base.
+
+Changes since original code base:
+Maven
+JavaWebSockets
+Android</description>
 </project>
