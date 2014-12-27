@@ -3,6 +3,9 @@
  */
 package com.bb.view.java.cli;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Observer;
 import java.util.Scanner;
 import java.util.UUID;
@@ -13,6 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.bb.game.gameObjects.GameQuestions;
+import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.game.gameObjects.Player.HumanPlayer;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModelClient;
@@ -26,6 +30,10 @@ import com.bb.view.AbstractGameView;
  * 
  */
 public class GameCliView extends AbstractGameView implements Observer, Runnable{
+	//Global game variables
+	protected ArrayList<String> availableCategories = new ArrayList<String>();
+	protected HashMap<UUID, AbstractPlayer> gamePlayers = new HashMap<UUID, AbstractPlayer>();
+	
 	public static void main(String[] args) {
 		GameCliView game = new GameCliView();
 		Thread gameViewThread = new Thread(game);
@@ -124,24 +132,16 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 		GameQuestions gameQuestions = new GameQuestions(questionCategoryInput,
 				numOfQuestions);
 
-		
-
-		
 		if(isHosting ){
 			log.debug("We are hosting the server");
 			
 			// Define the game object that will run the game
 			gameModel = new GameModelHost(this.gamePlayers, gameQuestions,
 					numOfQuestions);
-			
-			
-			// Start up the game in a separate thread than the GUI
-			if(gameModel instanceof GameModelHost){				
-				GameModelHost gameModelHost = (GameModelHost)gameModel;
-				// Tell the model that this GUI is observing changes in the model
-				gameModelHost.addObserver(this);
-				gameModelHost.startGame();
-			}
+						
+			// Tell the model that this GUI is observing changes in the model
+			gameModel.addObserver(this);
+			gameModel.startGame();
 	
 			// TODO: instead of starting game right away, we want to launch a game
 			// lobby on the server
@@ -160,7 +160,7 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			gameModel.addObserver(this);
 			
 			// TODO: As a client, we don't need to run the game, just need to listen to Server
-			
+			 
 			//Specify what kind of implementation of network we want to use to play the game on.
 			networkGameGatewayInterface = new NetworkGameGatewayImplLocal();
 			((NetworkGameGatewayImplLocal)networkGameGatewayInterface).addObserver(this);
@@ -182,7 +182,13 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 		System.out.println("::::::::::::::::::Place your Guess now::::::::::::::::::");
 		Scanner keyboard = new Scanner(System.in);
 		String guessInput = "";
-		guessInput = keyboard.next();
+		
+		try {
+			guessInput = keyboard.next();
+		} catch (NoSuchElementException ex) {
+			log.debug("Couldn't retrieve guess input, defaulting to none");
+			guessInput = "";
+		}
 		
 		do{
 			System.out.print("Enter in a valid guess");
