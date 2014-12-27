@@ -17,6 +17,7 @@ public abstract class AbstractPlayer implements PlayerActions {
 	protected int playerScore;
 	protected int permanentGameChips;
 	protected int volatileGameChips;
+	protected boolean isReady; //this variable will need to be reset as needed
 	
 	protected Guess guess;
 	
@@ -77,5 +78,17 @@ public abstract class AbstractPlayer implements PlayerActions {
 	 */
 	public void setVolatileGameChips(int volatileGameChips) {
 		this.volatileGameChips = volatileGameChips;
+	}
+	/**
+	 * @return the isReady
+	 */
+	public boolean isReady() {
+		return isReady;
+	}
+	/**
+	 * @param isReady the isReady to set
+	 */
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
 	}
 }
