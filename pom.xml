@@ -10,6 +10,14 @@
 		</developer>
 	</developers>
 
+	<repositories>
+		<repository>
+			<id>jWebSocket-Repo</id>
+			<name>jWebSocket Repository</name>
+			<url>http://mvn.jwebsocket.org/</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -26,18 +34,88 @@
 	<properties>
 		<slf4jVersion>1.7.6</slf4jVersion>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.2.9</version>
 		</dependency>
-
+	
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+	
+<!-- 		<dependency> -->
+<!-- 			<artifactId>jWebSocketServer</artifactId> -->
+<!-- 			<groupId>org.jwebsocket</groupId> -->
+<!-- 			<version>1.0-RC3</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>slf4j-api</artifactId> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>log4j</artifactId> -->
+<!-- 					<groupId>log4j</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 			<artifactId>jWebSocketServerAPI</artifactId> -->
+<!-- 			<groupId>org.jwebsocket</groupId> -->
+<!-- 			<version>1.0-RC3</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>log4j</artifactId> -->
+<!-- 					<groupId>log4j</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<artifactId>jWebSocketClientAPI</artifactId> -->
+<!-- 			<groupId>org.jwebsocket</groupId> -->
+<!-- 			<version>1.0-RC3</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<artifactId>jWebSocketJavaSEClient</artifactId>
+			<groupId>org.jwebsocket</groupId>
+			<version>1.0-RC3</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>activemq-client</artifactId> -->
+<!-- 					<groupId>org.apache.activemq</groupId> -->
+<!-- 				</exclusion> -->
+			</exclusions>
+		</dependency>
+		
+	
 	</dependencies>
 	<name>Brains And Bets</name>
 	<description>&lt;h1&gt;A University of Parkside SE2 project.&lt;/h1&gt;
