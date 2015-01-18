@@ -41,7 +41,12 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		
 		// Starts the connection to to server by the login information
 		String loginString = "ws://" + ip + "/;unid=" + name;
-		baseTokenClient.open(loginString);
+		try {
+			baseTokenClient.open(loginString);
+		} catch (WebSocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Checkes it the client is connected
 		if (baseTokenClient.isConnected()) {
 			log.debug("Connected to " +loginString);
@@ -49,7 +54,7 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 //			GraphicalUserInterface.inst.logFile.append("Connection established to: "
 //					+ GraphicalUserInterface.inst.ipaddy.getText() + "\n");
 		}else{
-			log.debug("Couldn't connect to " +loginString);
+			log.error("Couldn't connect to " +loginString);
 		}
 	}
 	
@@ -59,8 +64,14 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		
 		// Starts the connection to to server by the login information
 		String loginString = "ws://localhost:8787/jWebSocket/jWebSocket";
-		baseTokenClient.open(loginString);
-		// Checkes it the client is connected
+		try {
+			baseTokenClient.open(loginString);
+		} catch (WebSocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Checks it the client is connected
 		if (baseTokenClient.isConnected()) {
 			log.debug("Connected to " +loginString);
 //			// If client is connected then this will be displayed in the logFile window
@@ -130,8 +141,14 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 	}
 	@Override
 	public void createLobby() {
-		// TODO Auto-generated method stub
-		
+		try {
+			log.debug("Attempting to open connection to create lobby");
+			openLocalConnection();
+		} catch (IsAlreadyConnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.debug("Create Lobby failed... " +e.getMessage());
+		}
 	}
 	@Override
 	public void sendJoinGameRequest() {
@@ -156,8 +173,8 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 	@Override
 	public void sendMessage(NetworkPacketInterface networkPacket) {
 		// TODO Auto-generated method stub
-//		baseTokenClient.broadcastText("text" + name + ": " + text + "textende");
-//		log.debug("text" + name + ": " + text + "textende");
+		baseTokenClient.broadcastText("text" + name + ": " + text + "textende");
+		log.debug("text" + name + ": " + text + "textende");
 	}
 
 	@Override
