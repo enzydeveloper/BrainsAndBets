@@ -20,8 +20,8 @@ import com.bb.game.gameObjects.services.PlayerService;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
 import com.bb.game.model.GameModel;
 import com.bb.game.model.GameModelHost;
-import com.bb.network.AbstractNetworkGateway;
-import com.bb.network.NetworkGameGatewayInterface;
+import com.bb.network.gateway.AbstractNetworkGateway;
+import com.bb.network.gateway.NetworkGameGatewayInterface;
 
 /**
  * The game view needs to support the functionality of getting updates from the
@@ -33,10 +33,12 @@ import com.bb.network.NetworkGameGatewayInterface;
  */
 public abstract class AbstractGameView implements Observer {
 	protected Logger log = LoggerFactory.getLogger(AbstractGameView.class);
-	
+	//The player that is actually using this view
+	AbstractPlayer currentPlayer;
 
 	//How the game model will be affected by Server, if there are any
 	protected NetworkGameGatewayInterface networkGameGatewayInterface;
+	protected AbstractNetworkGateway abstractNetworkGateway;
 	
 	// Define what observable/observe variables
 	protected GameState gameState;
@@ -59,17 +61,20 @@ public abstract class AbstractGameView implements Observer {
 	 */
 	@Override
 	public void update(Observable observable, final Object data) {
+		//Does this break our IO waits correctly?
 		if(gameViewThread != null && gameViewThread.isAlive()){
+			log.debug("Interrupting gameViewThread={}", gameViewThread);
 			gameViewThread.interrupt();
 		}
 		
 		
 		if (observable == gameModel) {
-			log.debug("update(), data=" + data);
-			
+			log.debug("update(), data={}", data);
+
 			Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
+					//TODO: Re-factor so we don't do 'instanceof' comparisons
 					if (data instanceof GameState) {
 						GameState currentGameState = (GameState) data;
 						handleGameStateChange(currentGameState);
