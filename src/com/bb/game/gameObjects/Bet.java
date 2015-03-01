@@ -1,16 +1,19 @@
 package com.bb.game.gameObjects;
 
+import java.util.UUID;
+
 public class Bet {
-        private String playerName;
-        private int choice;
+        private UUID playerUUID;
+        private String choice;
         private int permanentChips;
         private int gameChips;
         
-        public String getName(){
-                return playerName;
-        }
         
-        public int getChoice(){
+		public UUID getPlayerUUID() {
+			return playerUUID;
+		}
+
+		public String getChoice(){
                 return choice;
         }
         
@@ -22,8 +25,15 @@ public class Bet {
                 return gameChips;
         }
         
-        public Bet(String playerName, int choice, int permanentChips, int gameChip){
-                this.playerName = playerName;
+        /**
+         * 
+         * @param playerUUID
+         * @param choice
+         * @param permanentChips
+         * @param gameChip
+         */
+        public Bet(UUID playerUUID, String choice, int permanentChips, int gameChip){
+                this.playerUUID = playerUUID;
                 this.choice = choice;
                 this.permanentChips = permanentChips;
                 this.gameChips = gameChip;
