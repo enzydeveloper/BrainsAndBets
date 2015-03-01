@@ -1,33 +1,42 @@
 package com.bb.game.gameObjects;
 
 public class Guess{
-        private String playerName;
-        private int guess;
-        private int odds;
+        private String guess = "";     
+        private Bet bet;
         
-        public String getName(){
-                return playerName;
+        public Guess(String guess, Bet bet){
+                this.guess = guess;
+                this.bet = bet;
         }
         
-        public int getGuess(){
+        public Guess(String guess){
+                this.guess = guess;
+        }
+
+        public String getGuessString(){
                 return guess;
         }
-        
-        public Guess(int guess, int odds){
-                this.guess = guess;
-                this.odds = odds;
-        }
-        
-        public Guess(String playerName, int guess){
-                this.playerName = playerName;
-                this.guess = guess;
-        }
+		public void setGuess(String guess) {
+			this.guess = guess;
+		}
 
-        public void setOdds(int odds) {
-                this.odds = odds;
-        }
+		public Bet getBet() {
+			return bet;
+		}
 
-        public int getOdds() {
-                return odds;
-        }
+		public void setBet(Bet bet) {
+			this.bet = bet;
+		}
+
+//		/* (non-Javadoc)
+//		 * @see java.lang.Object#equals(java.lang.Object)
+//		 */
+//		@Override
+//		public boolean equals(Object o) {
+//			if(o instanceof Guess){
+//				this.getGuess()
+//			}
+//			
+//			return super.equals(this);
+//		}
 }
