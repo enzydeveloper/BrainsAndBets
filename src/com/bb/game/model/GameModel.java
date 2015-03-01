@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,10 +17,13 @@ import org.slf4j.LoggerFactory;
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.GameState;
 import com.bb.game.gameObjects.GameStateWaitTime;
+import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
 import com.bb.game.gameObjects.services.PlayerService;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
+import com.bb.network.gateway.AbstractNetworkGateway;
+import com.bb.network.gateway.NetworkGameGatewayInterface;
 import com.bb.view.java.gui.CountDownTimerJava;
 
 /**
@@ -32,7 +36,7 @@ import com.bb.view.java.gui.CountDownTimerJava;
  * 
  */
 public abstract class GameModel extends Observable implements
-		GameModelControllerInterface, Runnable {
+		GameModelControllerInterface, Runnable, Observer {
 	Logger log = LoggerFactory.getLogger(GameModel.class);
 
 	// Timer variables
@@ -49,6 +53,8 @@ public abstract class GameModel extends Observable implements
 
 	// Communication between the model and observers
 	GameState gameState;
+	NetworkGameGatewayInterface networkGameGatewayInterface;
+	AbstractNetworkGateway abstractNetworkGateway;
 
 	// Thread that runs model separate from view thread
 	Thread gameModelThread;
@@ -56,12 +62,16 @@ public abstract class GameModel extends Observable implements
 	// Services to use in Model
 	PlayerService playerService = new PlayerServiceImpl();
 
-	public GameModel(Map<UUID, AbstractPlayer> gamePlayers,
-			GameQuestions gameQuestions, int numberOfRounds) {
+	public GameModel(AbstractNetworkGateway abstractNetworkGateway,
+			Map<UUID, AbstractPlayer> gamePlayers, GameQuestions gameQuestions, int numberOfRounds) {
 		this.gameState = GameState.STATE_GAME_UNINITIALIZED;
 		this.gamePlayers = gamePlayers;
 		this.gameQuestions = gameQuestions;
 		this.numberOfRounds = numberOfRounds;
+		this.abstractNetworkGateway = abstractNetworkGateway;
+		
+		//The gameModel will change based on what the NetworkGameGateway tells it
+		abstractNetworkGateway.addObserver(this);
 	}
 	
 	/**
@@ -86,6 +96,27 @@ public abstract class GameModel extends Observable implements
 		displayEndGameState();
 		log.debug("run() Game finished!");
 	}
+	
+	/**
+	 * Child classes must override the way it reacts to updates from the NetworkGameInterface
+	 */
+	@Override
+	public void update(Observable observable, Object data) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	abstract void setNextQuestion();
+	abstract void displayQuestionState();
+	abstract void waitOnQuestionState();
+	abstract void displayGuessState();
+	abstract void waitOnGuessState();
+	abstract void displayAnswerState();
+	abstract void waitOnAnswerState();
+	abstract void displayEndRoundState();
+	abstract void waitOnEndRoundState();
+	abstract void displayEndGameState();
+	
 
 	/**
 	 * 
@@ -93,23 +124,25 @@ public abstract class GameModel extends Observable implements
 	public void calculateEndRoundResults() {
 		String functionName = "calculateEndRoundResults";
 		log.debug("function={}", functionName);
-
-		for (Entry<UUID, AbstractPlayer> entry : gamePlayers.entrySet()) {
-			System.out.println(entry.getKey() + "/" + entry.getValue());
-
-			AbstractPlayer player = entry.getValue();
-			if (player.getGuess().getGuessString() == currentQuestion
-					.getAnswerString()) {
+		
+		for(UUID key : gamePlayers.keySet()){
+			AbstractPlayer player = gamePlayers.get(key);
+			if (player.getGuess() != null && player.getGuess().getGuessString().equals(currentQuestion
+					.getAnswerString())) {
 				playerService.updatePlayerWinnings(player, currentQuestion,
 						numberOfRounds, numberOfRounds, numberOfRounds);
 			}
 		}
 	}
 	
+	public void handleGuessUpdate(UUID playerKey, Guess guess){
+		
+	}
+	
 	/**
 	 * We can continue with the game if all players are ready for the next round
 	 */
-	private boolean checkIfPlayersAreReady() {
+	protected boolean checkIfPlayersAreReady() {
 		boolean allPlayersAreReady = true;
 		Set<UUID> playerKeySet = gamePlayers.keySet();
 		for(UUID playerUUID : playerKeySet){
@@ -122,106 +155,6 @@ public abstract class GameModel extends Observable implements
 	}
 	
 
-	public void setNextQuestion() {
-		log.debug("setNextQuestion:");
-		currentQuestion = gameQuestions.popQuestionFromList();
-	}
-
-	public void displayQuestionState() {
-		log.debug("displayQuestionState:");
-		this.gameState = GameState.STATE_QUESTION;
-		this.setChanged();
-		this.notifyObservers(gameState);
-	}
-
-	public void waitOnQuestionState() {
-		log.debug("waitOnGuessState()");
-		startTimer(GameStateWaitTime.GUESS_STATE_WAIT_TIME.getTimeToWait());
-		while (!gameTimer.isFinished() || checkIfPlayersAreReady()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				// handle the exception...
-				// For example consider calling
-				// Thread.currentThread().interrupt(); here.
-			}
-		}
-	}
-
-	public void displayGuessState() {
-		log.debug("displayGuessState:");
-		this.gameState = GameState.STATE_GUESS;
-		this.setChanged();
-		this.notifyObservers(gameState);
-	}
-
-	public void waitOnGuessState() {
-		log.debug("waitOnQuestionState()");
-		startTimer(GameStateWaitTime.QUESTION_STATE_WAIT_TIME.getTimeToWait());
-		while (!gameTimer.isFinished() || checkIfPlayersAreReady()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				// handle the exception...
-				// For example consider calling
-				// Thread.currentThread().interrupt(); here.
-			}
-		}
-	}
-
-	public void displayAnswerState() {
-		log.debug("displayAnswerState:");
-		this.gameState = GameState.STATE_ANSWER;
-		this.setChanged();
-		this.notifyObservers(gameState);
-	};
-
-	public void waitOnAnswerState() {
-		log.debug("waitOnAnswerState()");
-		startTimer(GameStateWaitTime.ANSWER_STATE_WAIT_TIME.getTimeToWait());
-		while (!gameTimer.isFinished() || checkIfPlayersAreReady()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				// handle the exception...
-				// For example consider calling
-				// Thread.currentThread().interrupt(); here.
-			}
-		}
-	}
-
-	public void displayEndRoundState() {
-		log.debug("displayEndRoundState:");
-		this.gameState = GameState.STATE_ROUND_FINISHED;
-		this.setChanged();
-		this.notifyObservers(gameState);
-	}
-
-	public void waitOnEndRoundState() {
-		log.debug("waitOnEndRoundState:");
-		startTimer(GameStateWaitTime.END_ROUND_STATE_WAIT_TIME.getTimeToWait());
-		while (!gameTimer.isFinished() || checkIfPlayersAreReady()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				// handle the exception...
-				// For example consider calling
-				// Thread.currentThread().interrupt(); here.
-			}
-		}
-	}
-
-	public void displayEndGameState() {
-		log.debug("displayEndGameState:");
-		this.gameState = GameState.STATE_GAME_FINISHED;
-		this.setChanged();
-		this.notifyObservers(gameState);
-	}
-
 	/**
 	 * Create an abstract timer and implement actions to take while timer is
 	 * active
@@ -232,7 +165,7 @@ public abstract class GameModel extends Observable implements
 
 			@Override
 			public void onTick(long millisUntilFinished) {
-				// log.debug("onTick() " + millisUntilFinished);
+				log.trace("onTick() " + millisUntilFinished);
 			}
 
 			@Override

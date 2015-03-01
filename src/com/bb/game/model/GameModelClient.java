@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
+import com.bb.network.gateway.NetworkGameGatewayInterface;
 
 /**
  * The client game model will only serve as place holder for game changes that
@@ -16,10 +17,23 @@ import com.bb.game.gameObjects.Player.AbstractPlayer;
  */
 public class GameModelClient extends GameModel{
 
+	/**
+	 * @param networkGameGatewayInterface
+	 * @param gamePlayers
+	 * @param gameQuestions
+	 * @param numberOfRounds
+	 */
+	public GameModelClient(
+			NetworkGameGatewayInterface networkGameGatewayInterface,
+			Map<UUID, AbstractPlayer> gamePlayers, GameQuestions gameQuestions,
+			int numberOfRounds) {
+		super(networkGameGatewayInterface, gamePlayers, gameQuestions, numberOfRounds);
+		// TODO Auto-generated constructor stub
+	}
+
 	public GameModelClient(Map<UUID, AbstractPlayer> gamePlayers,
 			GameQuestions gameQuestions, int numberOfRounds) {
-		super(gamePlayers, gameQuestions, numberOfRounds);
-		// TODO Auto-generated constructor stub
+		this(null, gamePlayers, gameQuestions, numberOfRounds);
 	}
 
 	/**
