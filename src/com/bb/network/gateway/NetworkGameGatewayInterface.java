@@ -1,10 +1,11 @@
-package com.bb.network;
+package com.bb.network.gateway;
 
 import java.util.List;
 
 import com.bb.game.gameObjects.Bet;
 import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
+import com.bb.network.packet.NetworkPacketInterface;
 
 
 /**
@@ -19,7 +20,7 @@ import com.bb.game.gameObjects.Question.AbstractQuestion;
 
 public interface NetworkGameGatewayInterface{
 	
-	void createLobby();
+	void createLobby(String ip, String lobbyName, String userName);
 	void sendJoinGameRequest();
 	
 	

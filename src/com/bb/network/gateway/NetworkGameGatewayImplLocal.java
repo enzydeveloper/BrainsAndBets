@@ -1,6 +1,9 @@
-package com.bb.network;
+package com.bb.network.gateway;
 
 import java.util.List;
+
+
+
 
 
 //import org.jwebsocket.api.WebSocketClientTokenListener;
@@ -10,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.bb.game.gameObjects.Bet;
 import com.bb.game.gameObjects.Guess;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
+import com.bb.network.packet.NetworkPacketInterface;
 
 public class NetworkGameGatewayImplLocal  extends AbstractNetworkGateway implements NetworkGameGatewayInterface{
 	protected Logger log = LoggerFactory.getLogger(NetworkGameGatewayImplLocal.class);

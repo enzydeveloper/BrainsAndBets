@@ -1,4 +1,4 @@
-package com.bb.network;
+package com.bb.network.gateway;
 
 
 
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bb.game.gameObjects.Bet;
 import com.bb.game.gameObjects.Guess;
+import com.bb.network.packet.NetworkPacketInterface;
 import com.bb.view.AbstractGameView;
 
 /**
@@ -24,7 +25,7 @@ import com.bb.view.AbstractGameView;
  * @author Enzo
  *
  */
-public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway implements NetworkGameGatewayInterface, WebSocketClientTokenListener{
+public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway implements WebSocketClientTokenListener{
 	protected Logger log = LoggerFactory.getLogger(NetworkGameGatewayImplJwebsocket.class);
 	
 	// Initialize a new BaseTokenClient for the later connection
@@ -50,20 +51,20 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		// Checkes it the client is connected
 		if (baseTokenClient.isConnected()) {
 			log.debug("Connected to " +loginString);
-//			// If client is connected then this will be displayed in the logFile window
-//			GraphicalUserInterface.inst.logFile.append("Connection established to: "
-//					+ GraphicalUserInterface.inst.ipaddy.getText() + "\n");
 		}else{
 			log.error("Couldn't connect to " +loginString);
 		}
+
+		this.sendMessage(null);
 	}
 	
-	public void openLocalConnection() throws IsAlreadyConnectedException{
+	public void openLocalConnection(String ip, String name) throws IsAlreadyConnectedException{
 		// Adds an action Listener to the BaseTokenClient
 		baseTokenClient.addListener(this);
 		
 		// Starts the connection to to server by the login information
-		String loginString = "ws://localhost:8787/jWebSocket/jWebSocket";
+//		String loginString = "ws://localhost:8787/jWebSocket/";
+		String loginString = "ws://" + ip + ":8787/;unid=" + name;
 		try {
 			baseTokenClient.open(loginString);
 		} catch (WebSocketException e) {
@@ -73,13 +74,15 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		
 		// Checks it the client is connected
 		if (baseTokenClient.isConnected()) {
-			log.debug("Connected to " +loginString);
+			log.info("Connected to " +loginString);
 //			// If client is connected then this will be displayed in the logFile window
 //			GraphicalUserInterface.inst.logFile.append("Connection established to: "
 //					+ GraphicalUserInterface.inst.ipaddy.getText() + "\n");
 		}else{
-			log.debug("Couldn't connect to " +loginString);
+			log.error("Couldn't connect to " +loginString);
 		}
+
+		this.sendMessage(null);
 	}
 	
 	// This method call the JWC disconnect function to disable the connection 
@@ -140,10 +143,10 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		
 	}
 	@Override
-	public void createLobby() {
+	public void createLobby(String ip, String lobbyName, String userName) {
 		try {
 			log.debug("Attempting to open connection to create lobby");
-			openLocalConnection();
+			openLocalConnection("localhost", userName);
 		} catch (IsAlreadyConnectedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,8 +175,15 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 	}
 	@Override
 	public void sendMessage(NetworkPacketInterface networkPacket) {
-		// TODO Auto-generated method stub
-		baseTokenClient.broadcastText("text" + name + ": " + text + "textende");
+		String name = "name";
+		String text = "text";
+
+		try {
+			baseTokenClient.broadcastText("text" + name + ": " + text + "textende");
+		} catch (WebSocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		log.debug("text" + name + ": " + text + "textende");
 	}
 
@@ -188,6 +198,7 @@ public class NetworkGameGatewayImplJwebsocket extends AbstractNetworkGateway imp
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
 	
