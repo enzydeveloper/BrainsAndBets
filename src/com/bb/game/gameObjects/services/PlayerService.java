@@ -49,6 +49,15 @@ public interface PlayerService {
 	public AbstractPlayer updatePlayerGuess(AbstractPlayer player, String guessString);
 	
 	/**
+	 * Update a player based on the UUID
+	 * @param playerKey
+	 * @param gamePlayers
+	 * @param guess
+	 * @return
+	 */
+	public Map<UUID, AbstractPlayer> updatePlayerGuess(UUID playerKey, final Map<UUID, AbstractPlayer> gamePlayers, Guess guess );
+	
+	/**
 	 * Update player winning based on what the player guessed on and how many possible answers there were
 	 * @param numberOfPlayerGuesses
 	 * @param numberOfPossibleAnswers

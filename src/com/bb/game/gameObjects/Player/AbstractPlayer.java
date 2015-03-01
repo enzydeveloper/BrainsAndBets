@@ -36,24 +36,35 @@ public abstract class AbstractPlayer implements PlayerActions {
 		this.volatileGameChips = volatileGameChips;
 		this.playerUUID = UUID.randomUUID();
 	}
+	
+	//Setters and Getters	
 	public UUID getPlayerUUID() {
 		return playerUUID;
 	}
 	public abstract boolean placeBet();
-	
-	//Setters and Getters
 	/**
-	 * @return the guess
+	 * @return the playerName
 	 */
-	public Guess getGuess() {
-		return guess;
+	public String getPlayerName() {
+		return playerName;
 	}
-	
 	/**
-	 * @param guess the guess to set
+	 * @param playerName the playerName to set
 	 */
-	public void setGuess(Guess guess) {
-		this.guess = guess;
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+	/**
+	 * @return the playerScore
+	 */
+	public int getPlayerScore() {
+		return playerScore;
+	}
+	/**
+	 * @param playerScore the playerScore to set
+	 */
+	public void setPlayerScore(int playerScore) {
+		this.playerScore = playerScore;
 	}
 	/**
 	 * @return the permanentGameChips
@@ -91,4 +102,23 @@ public abstract class AbstractPlayer implements PlayerActions {
 	public void setReady(boolean isReady) {
 		this.isReady = isReady;
 	}
+	/**
+	 * @return the guess
+	 */
+	public Guess getGuess() {
+		return guess;
+	}
+	/**
+	 * @param guess the guess to set
+	 */
+	public void setGuess(Guess guess) {
+		this.guess = guess;
+	}
+	/**
+	 * @param playerUUID the playerUUID to set
+	 */
+	public void setPlayerUUID(UUID playerUUID) {
+		this.playerUUID = playerUUID;
+	}
+	
 }

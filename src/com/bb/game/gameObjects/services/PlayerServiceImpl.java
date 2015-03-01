@@ -17,7 +17,7 @@ public class PlayerServiceImpl implements PlayerService {
 			Map<UUID, AbstractPlayer> gamePlayers) {
 
 		Map<UUID, AbstractPlayer> gamePlayersToReturn = gamePlayers;
-		gamePlayersToReturn.put(UUID.randomUUID(), absPlayer);
+		gamePlayersToReturn.put(absPlayer.getPlayerUUID(), absPlayer);
 		return gamePlayersToReturn;
 	}
 
@@ -39,6 +39,13 @@ public class PlayerServiceImpl implements PlayerService {
 		AbstractPlayer thisPlayer = player;
 		thisPlayer.setGuess(guess);
 		return thisPlayer;
+	}
+	
+	@Override
+	public Map<UUID, AbstractPlayer> updatePlayerGuess(UUID playerKey,
+			Map<UUID, AbstractPlayer> gamePlayers, Guess guess) {
+		gamePlayers.get(playerKey).setGuess(guess);
+		return gamePlayers;
 	}
 
 	//TODO: need to implement logic on how to calculate score
@@ -75,6 +82,7 @@ public class PlayerServiceImpl implements PlayerService {
 		
 		return null;
 	}
+
 	
 	
 }
