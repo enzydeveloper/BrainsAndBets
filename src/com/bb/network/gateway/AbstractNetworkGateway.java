@@ -1,7 +1,10 @@
-package com.bb.network;
+package com.bb.network.gateway;
 
 
 import java.util.Observable;
+
+
+
 
 
 import com.bb.game.gameObjects.GameState;
@@ -13,7 +16,7 @@ import com.bb.game.gameObjects.GameState;
  * @author Enzo
  *
  */
-public abstract class AbstractNetworkGateway extends Observable{
+public abstract class AbstractNetworkGateway extends Observable implements NetworkGameGatewayInterface{
 	GameState gameState = GameState.STATE_GAME_UNINITIALIZED;
 	
 	protected void updateState(final GameState gameState){
