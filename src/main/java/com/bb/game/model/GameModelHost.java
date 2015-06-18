@@ -36,6 +36,13 @@ public class GameModelHost extends GameModel {
 	Logger log = LoggerFactory.getLogger(GameModelHost.class);
 
 	/**
+	 * 
+	 */
+	public GameModelHost() {
+		super();
+	}
+
+	/**
 	 * @param abstractNetworkGateway
 	 * @param gamePlayers
 	 * @param gameQuestions
@@ -58,43 +65,7 @@ public class GameModelHost extends GameModel {
 		this(null, gamePlayers, gameQuestions, numberOfRounds);
 	}
 
-	
-	
-	/**
-	 * Start the game in a separate thread from the View
-	 */
-	@Override
-	public void startGame() {		
-		//Launch the gameModel in a separate thread than the GUI
-		this.gameModelThread = new Thread(this);
-		gameModelThread.setName(this.getClass().getName());
-		gameModelThread.start();
-	}
-
-	@Override
-	public void stopGame() {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void kickPlayer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void voteQuestionUp() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void voteQuestionDown() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	public void setNextQuestion() {
 		log.debug("setNextQuestion:");
@@ -206,6 +177,7 @@ public class GameModelHost extends GameModel {
 		this.setChanged();
 		this.notifyObservers(gameState);
 	}
+
 
 	
 }

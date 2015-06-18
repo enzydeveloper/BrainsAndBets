@@ -3,12 +3,15 @@
  */
 package com.bb.view.java.cli;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Observer;
 import java.util.Scanner;
 import java.util.UUID;
+
+import org.jwebsocket.kit.IsAlreadyConnectedException;
 
 import com.bb.game.gameObjects.Bet;
 import com.bb.game.gameObjects.GameQuestions;
@@ -90,14 +93,16 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 		String menuPrompt = 
 				"=== Main Menu ==="
 				+ "\n 1) Launch game"
-				+ "\n 2) Create question xml";
+				+ "\n 2) Create question xml"
+				+ "\n 3) Find Lobbyss";
 		String keyboardInput = "";
 		do{
 			System.out.println(menuPrompt);
 			keyboardInput = keyboard.next();
 		}
 		while(!keyboardInput.equalsIgnoreCase("1") &&
-				!keyboardInput.equalsIgnoreCase("2") );
+				!keyboardInput.equalsIgnoreCase("2") &&
+				!keyboardInput.equalsIgnoreCase("3"));
 		
 		switch (keyboardInput) {
 		case "1":
@@ -105,6 +110,15 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			break;
 		case "2":
 			GameQuestionsUtil.main(null); // quick dirty way of creating questions
+			break;
+		case "3":
+			NetworkGameGatewayImplJwebsocket abstractNetworkGateway = new NetworkGameGatewayImplJwebsocket();
+			try {
+				abstractNetworkGateway.displayAllLobbies();
+			} catch (IsAlreadyConnectedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		default:
 			printGameMainMenu();
@@ -166,11 +180,10 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			// Define the game object that will run the game
 			gameModel = new GameModelHost(abstractNetworkGateway, this.gamePlayers, gameQuestions,
 					numOfQuestions);
-//			gameModel = new GameModelHost(this.gamePlayers, gameQuestions,
-//					numOfQuestions);
 
-			//Test
-//			abstractNetworkGateway.createLobby();
+			// Open a connection to the server to host on
+			abstractNetworkGateway.createLobby("localhost", "TestLobbyName", gamePlayers.get(currentPlayerUUID).getPlayerName());
+			
 			
 			// Tell the model that this GUI is observing changes in the model
 			gameModel.addObserver(this);
@@ -192,16 +205,12 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 			((NetworkGameGatewayImplLocal) networkGameGatewayInterface)
 					.addObserver(this);
 
-			// Open a connection to the server to host on
-//			networkGameGatewayInterface.createLobby();
 			
 			// Define the game object type that will run the game
 			gameModel = new GameModelClient(this.gamePlayers, gameQuestions,
 					numOfQuestions);
 			// Jamie loves gui
 			gameModel.addObserver(this);
-			
-			
 		}
 	}
 	private int promptForNumberOfQuestions(){
@@ -408,6 +417,12 @@ public class GameCliView extends AbstractGameView implements Observer, Runnable{
 	protected void handleStateGameFinished() {
 		log.debug("handleStateGameFinished()");
 		System.out.println("::::::::::::::::::END GAME::::::::::::::::::");
+	}
+
+	@Override
+	public void addController(ActionListener controller) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

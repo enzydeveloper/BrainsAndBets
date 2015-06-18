@@ -6,6 +6,7 @@ import java.util.List;
 
 
 
+
 //import org.jwebsocket.api.WebSocketClientTokenListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,10 @@ public class NetworkGameGatewayImplLocal  extends AbstractNetworkGateway impleme
 	/**
 	 * Since this is a local lobby, we don't need to connect to the server to create a lobby
 	 */
+
 	@Override
-	public void createLobby() {
-		
+	public void createLobby(String ip, String lobbyName, String userName) {
+		// TODO Auto-generated method stub
 	}
 	
 	@Override
@@ -70,4 +72,5 @@ public class NetworkGameGatewayImplLocal  extends AbstractNetworkGateway impleme
 		// TODO Auto-generated method stub
 		
 	}
+
 }

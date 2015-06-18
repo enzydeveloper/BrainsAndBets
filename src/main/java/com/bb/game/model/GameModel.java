@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bb.game.controller.GameController;
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.GameState;
 import com.bb.game.gameObjects.GameStateWaitTime;
@@ -22,6 +23,8 @@ import com.bb.game.gameObjects.Player.AbstractPlayer;
 import com.bb.game.gameObjects.Question.AbstractQuestion;
 import com.bb.game.gameObjects.services.PlayerService;
 import com.bb.game.gameObjects.services.PlayerServiceImpl;
+import com.bb.game.model.services.GameModelService;
+import com.bb.game.model.services.GameModelServiceImpl;
 import com.bb.network.gateway.AbstractNetworkGateway;
 import com.bb.network.gateway.NetworkGameGatewayInterface;
 import com.bb.view.java.gui.CountDownTimerJava;
@@ -36,7 +39,7 @@ import com.bb.view.java.gui.CountDownTimerJava;
  * 
  */
 public abstract class GameModel extends Observable implements
-		GameModelControllerInterface, Runnable, Observer {
+		Runnable {
 	Logger log = LoggerFactory.getLogger(GameModel.class);
 
 	// Timer variables
@@ -53,25 +56,30 @@ public abstract class GameModel extends Observable implements
 
 	// Communication between the model and observers
 	GameState gameState;
-	NetworkGameGatewayInterface networkGameGatewayInterface;
-	AbstractNetworkGateway abstractNetworkGateway;
 
 	// Thread that runs model separate from view thread
 	Thread gameModelThread;
 
 	// Services to use in Model
-	PlayerService playerService = new PlayerServiceImpl();
+	GameModelService gameModelService = new GameModelServiceImpl();
 
+	/**
+	 * default constructor
+	 */
+	public GameModel(){
+		
+	}
+	
 	public GameModel(AbstractNetworkGateway abstractNetworkGateway,
 			Map<UUID, AbstractPlayer> gamePlayers, GameQuestions gameQuestions, int numberOfRounds) {
 		this.gameState = GameState.STATE_GAME_UNINITIALIZED;
 		this.gamePlayers = gamePlayers;
 		this.gameQuestions = gameQuestions;
 		this.numberOfRounds = numberOfRounds;
-		this.abstractNetworkGateway = abstractNetworkGateway;
+//		this.abstractNetworkGateway = abstractNetworkGateway;
 		
 		//The gameModel will change based on what the NetworkGameGateway tells it
-		abstractNetworkGateway.addObserver(this);
+//		abstractNetworkGateway.addObserver(this);
 	}
 	
 	/**
@@ -96,16 +104,7 @@ public abstract class GameModel extends Observable implements
 		displayEndGameState();
 		log.debug("run() Game finished!");
 	}
-	
-	/**
-	 * Child classes must override the way it reacts to updates from the NetworkGameInterface
-	 */
-	@Override
-	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
 		
-	}
-	
 	abstract void setNextQuestion();
 	abstract void displayQuestionState();
 	abstract void waitOnQuestionState();
@@ -124,15 +123,7 @@ public abstract class GameModel extends Observable implements
 	public void calculateEndRoundResults() {
 		String functionName = "calculateEndRoundResults";
 		log.debug("function={}", functionName);
-		
-		for(UUID key : gamePlayers.keySet()){
-			AbstractPlayer player = gamePlayers.get(key);
-			if (player.getGuess() != null && player.getGuess().getGuessString().equals(currentQuestion
-					.getAnswerString())) {
-				playerService.updatePlayerWinnings(player, currentQuestion,
-						numberOfRounds, numberOfRounds, numberOfRounds);
-			}
-		}
+		gameModelService.calculateEndRoundResults(gamePlayers, currentQuestion);
 	}
 	
 	public void handleGuessUpdate(UUID playerKey, Guess guess){

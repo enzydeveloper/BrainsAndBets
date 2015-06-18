@@ -1,5 +1,6 @@
 package com.bb.view;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -27,6 +28,7 @@ import com.bb.network.gateway.NetworkGameGatewayInterface;
  * The game view needs to support the functionality of getting updates from the
  * hostServer and update the GUI components accordingly.
  * 
+ * GameView 'observes' the model for changes. Model pushes changes to view
  * 
  * @author Enzo
  * 
@@ -42,7 +44,6 @@ public abstract class AbstractGameView implements Observer {
 	
 	// Define what observable/observe variables
 	protected GameState gameState;
-	protected GameModel gameModel;
 	
 	//Thread pool for view
 	protected ExecutorService executorService = Executors.newCachedThreadPool();
@@ -51,6 +52,7 @@ public abstract class AbstractGameView implements Observer {
 	//Services for use View use
 	protected PlayerService playerService = new PlayerServiceImpl();
 	
+	public abstract void addController(ActionListener controller);
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,7 +70,7 @@ public abstract class AbstractGameView implements Observer {
 		}
 		
 		
-		if (observable == gameModel) {
+		if (observable instanceof GameModel) {
 			log.debug("update(), data={}", data);
 
 			Runnable runnable = new Runnable() {

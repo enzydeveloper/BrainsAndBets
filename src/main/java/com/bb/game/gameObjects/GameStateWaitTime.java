@@ -11,7 +11,7 @@ package com.bb.game.gameObjects;
  */
 public enum GameStateWaitTime {
 	
-	QUESTION_STATE_WAIT_TIME(1000), // 30 seconds
+	QUESTION_STATE_WAIT_TIME(10000), // 30 seconds
 	BET_STATE_WAIT_TIME(10000), // 30 seconds
 	GUESS_STATE_WAIT_TIME(10000),
 	ANSWER_STATE_WAIT_TIME(5000), // 5 seconds

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.bb.game.gameObjects.GameQuestions;
 import com.bb.game.gameObjects.Player.AbstractPlayer;
+import com.bb.network.gateway.AbstractNetworkGateway;
 import com.bb.network.gateway.NetworkGameGatewayInterface;
 
 /**
@@ -27,7 +28,7 @@ public class GameModelClient extends GameModel{
 			NetworkGameGatewayInterface networkGameGatewayInterface,
 			Map<UUID, AbstractPlayer> gamePlayers, GameQuestions gameQuestions,
 			int numberOfRounds) {
-		super(networkGameGatewayInterface, gamePlayers, gameQuestions, numberOfRounds);
+		super((AbstractNetworkGateway) networkGameGatewayInterface, gamePlayers, gameQuestions, numberOfRounds);
 		// TODO Auto-generated constructor stub
 	}
 

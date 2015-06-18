@@ -1,4 +1,4 @@
-package com.bb.game.model;
+package com.bb.game.controller;
 
 /**
  * Define what methods that affects the game model. 
@@ -7,7 +7,10 @@ package com.bb.game.model;
  * @author Enzo
  *
  */
-public interface GameModelControllerInterface {
+public interface GameController {
+	
+	void createGame();
+	
 	void startGame();
 	void stopGame();
 	
